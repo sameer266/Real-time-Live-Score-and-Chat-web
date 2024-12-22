@@ -68,4 +68,28 @@ const DeletePost = async (id) => {
   }
 };
 
-export { Get_Posts_Data, Send_Posts_Data, DeletePost, Get_OneUser_Data };
+
+
+// =====send like to server========
+const LikePost =async (id,user)=>{
+
+  try{
+    const response=await axios.post(`http://127.0.0.1:8000/posts/like-post/${id}/`,
+
+    {},
+    {
+    withCredentials:true
+    }
+    );
+    return response.data;
+  }
+
+  
+  catch(error){
+    console.log("error in sending like to server",error);
+    alert("Error in sending like to server",error.response.error)
+  }
+}
+
+export { Get_Posts_Data, Send_Posts_Data, DeletePost, Get_OneUser_Data, LikePost };
+

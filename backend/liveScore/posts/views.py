@@ -73,13 +73,10 @@ class LikePost(APIView):
     authentication_classes = [BasicAuthentication]  # Custom authentication class
     permission_classes = [IsAuthenticated]  # Ensure the user is authenticated
     
-    def post(self, request):
-        data = request.data
-        
-        # Check if the post_id exists in the data
-        if 'post_id' in data:
+    def post(self, request,id):
+       
             try:
-                post = Post.objects.get(id=data['post_id'])
+                post = Post.objects.get(id=id)
             except Post.DoesNotExist:
                 return Response({"error": "Post not found.","success":False}, status=404)
 
@@ -93,9 +90,9 @@ class LikePost(APIView):
             like = Like.objects.create(post=post, user=user)
             return Response({"message": "You have liked the post.","success":True}, status=201)
         
-        return Response({"error": "No post_id provided.","success":False}, status=400)
+    
 
-
+# ======Get one User Post=======
 class Get_OneUser_Post(APIView):
     def get(self,request,username):
         try:

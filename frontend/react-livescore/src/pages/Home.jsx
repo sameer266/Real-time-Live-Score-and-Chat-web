@@ -1,15 +1,19 @@
 // Home.js
 import React, { useEffect, useState } from "react";
-import { Get_Posts_Data } from "../data/AllPPostData"; // Function to fetch posts
+import { Get_Posts_Data,LikePost  } from "../data/AllPPostData"; // Function to fetch posts
 import { SlLike } from "react-icons/sl"; // Like Icon
 import { FaRegComment } from "react-icons/fa"; // Comment Icon
 import Avatar from "../assets/images/man.png"; // Default Avatar
 import "../style/home.css"; // Import CSS file
 import Slidebar from "../components/Slidebar"; // Import Sidebar component
-
+import { ToastContainer,toast } from "react-toastify";
 const Home = () => {
   const [posts, setPosts] = useState([]);
 
+  //=== Notification function===
+  const notify=(msg)=>toast(msg);
+
+  //======= Fetch posts from the server =======
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -25,7 +29,14 @@ const Home = () => {
 
 
   // =====Send like to server========
-  const sendLike = (id, user) => {};
+  const sendLike = (id, user) => {
+    const response = LikePost(id, user);
+    if (response.success){
+      notify('Liked')
+
+    }
+
+  };
 
   
   return (
