@@ -1,0 +1,168 @@
+/* Poll container */
+.poll-container {
+  width: 100%;
+  max-width: 500px; /* Adjust the max-width for larger screens */
+  margin: 40px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 20px; /* Modern rounded corners */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+
+  position: relative;
+  margin-top: 120px; /* Spacing from the top */
+  overflow: hidden; /* Ensures smooth visual boundaries */
+}
+
+/* Poll question */
+.poll-container h3 {
+  font-size: 1.6rem;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: 700; /* Bold for emphasis */
+  line-height: 1.4;
+}
+
+/* Poll option container */
+.poll-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  font-size: 1.1rem; /* Adjust font size */
+}
+
+/* Poll option hover effect */
+.poll-option:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Poll bar styles */
+.poll-bar {
+  height: 28px; /* Taller bars */
+  border-radius: 14px;
+  transition: width 0.3s ease;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  padding: 0 10px;
+  font-weight: 600;
+}
+
+/* Team name text */
+.team-name {
+  font-weight: bold;
+  color: #333;
+  font-size: 1.1rem;
+  margin-right: 10px;
+  transition: color 0.3s ease;
+}
+
+/* Poll bar hover effect */
+.poll-bar:hover {
+  opacity: 0.9;
+}
+
+/* Add space between poll options */
+.poll-option:last-child {
+  margin-bottom: 0;
+}
+
+/* Add spacing at the top */
+.poll-container:before {
+  content: "";
+  display: block;
+  height: 30px;
+}
+
+/* Responsive design for tablets and mobile devices */
+@media (max-width: 768px) {
+  .poll-container {
+    max-width: 90%;
+    margin-top: 80px; /* Adjust top margin */
+    padding: 15px; /* Reduced padding */
+  }
+
+  .poll-container h3 {
+    font-size: 1.4rem; /* Adjust font size */
+    margin-bottom: 15px; /* Reduced margin */
+  }
+
+  .poll-option {
+    flex-direction: column; /* Stack options vertically */
+    align-items: flex-start;
+    font-size: 1rem; /* Smaller font for mobile */
+    padding: 12px; /* Reduced padding */
+  }
+
+  .poll-bar {
+    height: 24px; /* Slightly smaller poll bar */
+  }
+
+  .team-name {
+    font-size: 1rem; /* Smaller team name */
+  }
+}
+
+/* Responsive design for larger devices (desktops and larger tablets) */
+@media (min-width: 769px) {
+  .poll-container {
+    max-width: 600px; /* Larger max-width for wider screens */
+    margin-top: 120px; /* Keeps the spacing from the top */
+    padding: 20px; /* Default padding */
+  }
+
+  .poll-container h3 {
+    font-size: 1.8rem; /* Larger text for wide screens */
+  }
+
+  .poll-option {
+    font-size: 1.2rem; /* Slightly larger text for desktop */
+    padding: 18px; /* More space between options */
+  }
+
+  .poll-bar {
+    height: 30px; /* Larger bars on wider screens */
+  }
+
+  .team-name {
+    font-size: 1.2rem; /* Larger team names */
+  }
+}
+
+/* Extra small devices (Phones with very small screens) */
+@media (max-width: 480px) {
+  .poll-container {
+    max-width: 100%; /* Full width on extra small devices */
+    padding: 12px; /* Reduced padding */
+  }
+
+  .poll-container h3 {
+    font-size: 1.3rem; /* Smaller text for very small screens */
+    margin-bottom: 10px; /* Reduced margin */
+  }
+
+  .poll-option {
+    flex-direction: column; /* Stack vertically */
+    align-items: flex-start;
+    font-size: 0.95rem; /* Smaller font size */
+    padding: 10px; /* Further reduced padding */
+  }
+
+  .poll-bar {
+    height: 22px; /* Smaller bars */
+  }
+
+  .team-name {
+    font-size: 0.95rem; /* Smaller text */
+  }
+}

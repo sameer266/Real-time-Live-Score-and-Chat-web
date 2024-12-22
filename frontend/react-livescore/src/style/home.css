@@ -1,0 +1,230 @@
+/* Variables */
+:root {
+    --primary-color: #2563eb; /* Blue */
+    --secondary-color: #f3f4f6; /* Light Gray */
+    --text-color: #374151; /* Dark Gray */
+    --white: #ffffff;
+    --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease-in-out;
+  }
+  
+
+  .home {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--secondary-color);
+  }
+ 
+  
+  /* Main Content */
+  .content {
+    flex: 1;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+  }
+  
+  /* Page Title */
+  .content h1 {
+    color: #ffffff; /* White text */
+    font-size: 2rem; /* Slightly larger font size */
+    text-align: center;
+    margin-bottom: 1.8rem; /* More spacing below the heading */
+    font-weight: 700; /* Bold text */
+    letter-spacing: 2px; /* Wider letter spacing for a premium look */
+    text-transform: uppercase; /* Make the text uppercase */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    background: linear-gradient(90deg, #1e3a8a, #2563eb); /* Gradient text effect */
+    -webkit-background-clip: text; /* Clip the gradient to text */
+    -webkit-text-fill-color: transparent; /* Make the text transparent to show gradient */
+    animation: glow 1.5s infinite alternate; /* Add glowing effect */
+  }
+  
+  /* Glow animation for text */
+  @keyframes glow {
+    from {
+      text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.5);
+    }
+    to {
+      text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.8);
+    }
+  }
+  
+  /* Posts Container */
+  .posts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjusted min-width */
+    gap: 1.5rem;
+    max-width: 900px; /* Reduced max-width for narrower posts */
+    width: 100%;
+    margin: 0 auto; /* Center the posts container */
+    transition: var(--transition);
+  }
+  
+  /* Individual Post */
+  .post {
+    background: var(--white);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    padding: 1rem;
+    transition: var(--transition);
+  }
+  
+  .post:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* Post Header */
+  .post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .post-header .avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 1rem;
+  }
+  
+  .post-header .user-info p {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0;
+    color: var(--text-color);
+  }
+  
+  .post-header .user-info span {
+    font-size: 0.9rem;
+    color: gray;
+  }
+  
+  /* Post Title */
+  .post-title {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    text-align: center;
+  }
+  
+  /* Post Image */
+  .post-image {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    object-fit: cover;
+    height: auto; /* Ensure image scales properly */
+  }
+  
+  /* Post Footer */
+  .post-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.5rem;
+    border-top: 1px solid #e5e7eb;
+  }
+  
+  .action-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.2s ease-in-out;
+  }
+  
+  .action-button:hover {
+    color: var(--primary-color);
+    transform: scale(1.1);
+  }
+  
+  .icon {
+    font-size: 1.2rem;
+  }
+  
+  /* No Posts Message */
+  .no-posts {
+    text-align: center;
+    color: gray;
+    font-size: 1rem;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+ 
+  
+    .posts {
+      max-width: 750px; /* Further reduced max-width for medium screens */
+    }
+  
+    .post-header .avatar {
+      width: 40px;
+      height: 40px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+
+  
+    .content {
+      padding: 1rem;
+      align-items: center; /* Ensure content is centered */
+    }
+  
+    .posts {
+      max-width: 700px; /* Adjust max-width for tablet screens */
+      padding: 0 1rem;
+    }
+  
+    .post-header .avatar {
+      width: 40px;
+      height: 40px;
+    }
+  
+    .post-header .user-info p {
+      font-size: 0.95rem;
+    }
+  
+    .post-title {
+      font-size: 0.95rem;
+    }
+  
+    .post-footer .action-button {
+      font-size: 0.85rem;
+    }
+  
+    .icon {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .posts {
+      grid-template-columns: 1fr;
+      max-width: 100%;
+      gap: 1rem;
+    }
+  
+    .content h1 {
+      font-size: 1.5rem;
+    }
+  
+    .post-title {
+      font-size: 0.9rem;
+    }
+  
+    .post-footer .action-button {
+      font-size: 0.8rem;
+    }
+  
+    .icon {
+      font-size: 0.9rem;
+    }
+  }
+  

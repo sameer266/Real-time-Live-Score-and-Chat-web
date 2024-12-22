@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'matches',
     'polls',
     'chats',
+    'posts',
+    'dashboards',
     
 ]
 
@@ -140,6 +142,23 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+
+# ====================
+# =======Authentication=====
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         'rest_framework.authentication.BasicAuthentication',
+       
+#     ],
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.IsAuthenticated',
+#     ],
+# }
+
+
+
+
 #---redis channels  setUp---------
 
 CHANNEL_LAYERS = {
@@ -152,7 +171,10 @@ CHANNEL_LAYERS = {
 }
 
 # --------Cors header-------
-CORS_ORIGIN_WHITELIST = (
-    'http://localhost:3000',
-    "http://127.0.0.1:3000",
-)
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = True
+
+# CORS_ORIGIN_WHITELIST = (
+    
+#     "localhost:3000"
+# )

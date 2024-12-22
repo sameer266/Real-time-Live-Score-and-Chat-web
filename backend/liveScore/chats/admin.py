@@ -3,9 +3,10 @@ from django.contrib import admin
 from  chats.models import ChatRooms,Message
 from matches.models import Match,Tournament,Team
 from polls.models import Poll,Vote
+from posts.models import Post,Like
 
 # Register your models here.
-
+# ==========Chat app=============
 class MessageInline(admin.TabularInline):
     model=Message
     extra=1
@@ -21,6 +22,12 @@ class AdminChatRooms(admin.ModelAdmin):
 class AdminMessage(admin.ModelAdmin):
     list_display=('room','sender','content','timestamp')
     
+
+#==============Match app=================
+class  MatchInline(admin.TabularInline):
+    model=Match
+    extra=1
+    fields='tournament','home_team','away_team','home_score','away_score','status','start_time'
     
 @admin.register(Match)
 class AdminMatch(admin.ModelAdmin):
@@ -29,6 +36,9 @@ class AdminMatch(admin.ModelAdmin):
 @admin.register(Tournament)
 class AdminTournament(admin.ModelAdmin):
     list_display=('name',)
+    inlines=[MatchInline]
+    
+       
     
 @admin.register(Team)
 class AdminTeam(admin.ModelAdmin):
@@ -36,13 +46,23 @@ class AdminTeam(admin.ModelAdmin):
  
     
     
-    
+# =============== POLL app=====================
 @admin.register(Poll)
 class AdminPoll(admin.ModelAdmin):
-    list_display=('question','team_A','team_B')    
+    list_display=('id','question','team_A','team_B')    
 
 @admin.register(Vote)
 class AdminVote(admin.ModelAdmin):
     list_display=('id','poll','user','choice')
     
-    
+
+
+# =================POST app=====================
+@admin.register(Post)
+class AdminPost(admin.ModelAdmin):
+    list_display=('title','image','created_at','user')
+
+
+@admin.register(Like)
+class AdminLike(admin.ModelAdmin):
+    list_display=('user','post','created_at')

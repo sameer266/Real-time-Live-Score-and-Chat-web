@@ -1,0 +1,118 @@
+/* General Styles */
+
+  /* Signup Container */
+  .signup-container {
+    background-image: url('../assets/images/football.jpg'); /* Path relative to the public folder */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  /* Signup Content Box */
+  .signup-content {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 3rem;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .signup-title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    color: #fff;
+  }
+  
+  /* Input Group */
+  .input-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+  
+  .input-group label {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #333;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+  
+  /* Button */
+  .signup-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .signup-btn:hover {
+    background-color: #ff4757;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .signup-content {
+      padding: 2rem;
+    }
+  
+    .signup-title {
+      font-size: 1.6rem;
+    }
+  
+    .input-group input {
+      font-size: 0.95rem;
+      padding: 8px;
+    }
+  
+    .signup-btn {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .signup-container {
+      padding: 10px;
+    }
+  
+    .signup-content {
+      padding: 1.5rem;
+      max-width: 400px;
+    }
+  
+    .signup-title {
+      font-size: 1.4rem;
+    }
+  
+    .input-group input {
+      font-size: 0.9rem;
+      padding: 6px;
+    }
+  
+    .signup-btn {
+      font-size: 0.95rem;
+    }
+  }
+  
