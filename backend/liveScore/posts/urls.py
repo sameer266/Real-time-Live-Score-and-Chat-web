@@ -7,6 +7,6 @@ urlpatterns = [
  path('posts-data/<username>/',views.Get_OneUser_Post.as_view()),
  path('create-post/',views.PostsData.as_view()),
  path('delete-post/<int:id>/',views.PostsData.as_view()),
- path('like-posts/',views.LikePost.as_view()), #---> liked post save in DB
+ path('like-posts/<int:id>/',views.LikePost.as_view()), #---> liked post save in DB
     
 ]

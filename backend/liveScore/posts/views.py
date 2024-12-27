@@ -5,7 +5,7 @@ from posts.serializers import PostSerializer,LikeSerializer
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.authentication import BasicAuthentication
+from rest_framework.authentication import BasicAuthentication,SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import authentication_classes,permission_classes
 # Create your views here.
@@ -70,17 +70,19 @@ class PostsData(APIView):
 
 # ===========When user likes a post, save to DB===============
 class LikePost(APIView):
-    authentication_classes = [BasicAuthentication]  # Custom authentication class
-    permission_classes = [IsAuthenticated]  # Ensure the user is authenticated
     
+    # sing decorator deoestnot override global setting
+    @authentication_classes([SessionAuthentication])
+    @permission_classes([IsAuthenticated])
     def post(self, request,id):
-       
+        try:
+            
             try:
                 post = Post.objects.get(id=id)
             except Post.DoesNotExist:
                 return Response({"error": "Post not found.","success":False}, status=404)
 
-            username = request.user
+            username=request.data.get('username')
             user=User.objects.get(username=username)
             
             # Check if the user has already liked the post
@@ -88,10 +90,11 @@ class LikePost(APIView):
                 return Response({"error": "You have already liked this post.","success":False}, status=400)
 
             # Create and save the Like entry
-            like = Like.objects.create(post=post, user=user)
+            Like.objects.create(post=post, user=user)
             return Response({"message": "You have liked the post.","success":True}, status=201)
         
-    
+        except Exception as e:
+            return Response({"error":str(e),"success":False},status=400)    
 
 # ======Get one User Post=======
 class Get_OneUser_Post(APIView):

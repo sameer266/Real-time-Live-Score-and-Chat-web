@@ -1,151 +1,159 @@
-/* sidebar.css */
+/* Sidebar Overlay */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.3s, opacity 0.3s ease-in-out;
+}
+
+.sidebar-overlay.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Sidebar Styles */
 .sidebar {
-    width: 250px;
-    background-color: #ffffff; /* White background */
-    color: #2575fc; /* Blue text color */
-    padding: 20px;
-    position: fixed;
-    top: 0;
+  position: fixed;
+  top: 0;
+  left: -250px; /* Hidden by default */
+  width: 250px;
+  height: 100%;
+  background-color: #333;
+  color: white;
+  transition: left 0.3s ease-in-out;
+  z-index: 1000;
+  padding-top: 60px; /* Add space for header */
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar.show {
+  left: 0; /* Slide in when visible */
+}
+
+.sidebar.hide {
+  left: -250px; /* Slide out when hidden */
+}
+
+/* Sidebar Header */
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+}
+
+.sidebar-header h2 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+  letter-spacing: 1px; /* Adds some space between letters */
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #fff;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: #ff6347; /* Change color on hover */
+}
+
+/* Sidebar Links */
+.sidebar-links {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.sidebar-links li {
+  padding: 15px 20px;
+  border-bottom: 1px solid #444;
+}
+
+.sidebar-links li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.2rem;
+  display: block;
+  transition: background-color 0.3s ease, padding-left 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-links li a:hover {
+  background-color: #444;
+  padding-left: 10px; /* Indentation effect on hover */
+}
+
+.sidebar-links li a:active {
+  color: #ff6347; /* Active link color */
+}
+
+/* Sidebar Footer (Optional for additional links) */
+.sidebar-footer {
+  margin-top: 20px;
+  padding: 15px;
+  text-align: center;
+  color: #fff;
+}
+
+.sidebar-footer a {
+  color: #ff6347;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.sidebar-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Improved Animation */
+@keyframes slideIn {
+  0% {
+    left: -250px;
+  }
+  100% {
     left: 0;
-    height: 100%;
-    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
-    transition: all 0.3s ease-in-out;
   }
-  
-  /* Sidebar Heading */
-  .sidebar h2 {
-    margin-top: 60px;
-    text-align: center;
-    font-size: 1.8rem;
-    color: #2575fc; /* Blue text for the heading */
-    margin-bottom: 20px;
-    letter-spacing: 1.5px;
-    font-weight: 600;
+}
+
+@keyframes slideOut {
+  0% {
+    left: 0;
   }
-  
-  /* Sidebar List Styles */
-  .sidebar ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+  100% {
+    left: -250px;
   }
-  
-  /* Sidebar List Item Styles */
-  .sidebar ul li {
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 5px;
+}
+
+.sidebar.show {
+  animation: slideIn 0.3s ease-out;
+}
+
+.sidebar.hide {
+  animation: slideOut 0.3s ease-in;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+  }
+
+  .sidebar-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .sidebar-links li a {
     font-size: 1.1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    color: #2575fc; /* Blue text color */
   }
-  
-  /* Hover Effect for List Items */
-  .sidebar ul li:hover {
-    background-color: #2575fc; /* Blue background on hover */
-    color: #ffffff; /* White text on hover */
-    transform: translateX(5px); /* Slight right shift for hover effect */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Active Item Style */
-  .sidebar ul li.active {
-    background-color: #2575fc; /* Blue background for active item */
-    color: #ffffff; /* White text for active item */
-    font-weight: 600; /* Bold text for active item */
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Sidebar Item Icon (optional, if you have icons) */
-  .sidebar ul li i {
-    margin-right: 10px; /* Space between icon and text */
-    font-size: 1.3rem; /* Slightly larger icon size */
-  }
-  
-  /* Button Styling */
-  .sidebar .button {
-    background-color: #ffffff; /* White background */
-    color: #2575fc; /* Blue text */
-    border: 2px solid #2575fc; /* Blue border */
-    padding: 10px 20px;
-    font-size: 1.1rem;
-    font-weight: 500;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    width: 100%;
-    margin-top: 20px;
-    text-align: center;
-    position: relative;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden; /* Hide the animated line outside the button */
-  }
-  
-  /* Button Hover Effect */
-  .sidebar .button:hover {
-    background-color: #2575fc; /* Blue background on hover */
-    color: #ffffff; /* White text on hover */
-    transform: translateY(-3px); /* Slight lift on hover */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Line Animation on Hover */
-  .sidebar .button::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: -100%; /* Start from the left */
-    width: 100%;
-    height: 3px;
-    background-color: #ffffff; /* White line color */
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .sidebar .button:hover::after {
-    left: 0; /* Animate the line from left to right */
-  }
-  
-  /* Optional: Style for Scrollbar */
-  .sidebar::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  .sidebar::-webkit-scrollbar-thumb {
-    background: #2575fc;
-    border-radius: 10px;
-  }
-  
-  .sidebar::-webkit-scrollbar-track {
-    background: #f4f4f4;
-  }
-  
-  /* Additional styling for better spacing and alignment */
-  .sidebar ul li + li {
-    margin-top: 10px;
-  }
-  
-  /* Media Queries for Responsiveness */
-  @media (max-width: 768px) {
-    .sidebar {
-      width: 200px; /* Slightly smaller sidebar on mobile */
-      padding: 15px;
-    }
-  
-    .sidebar h2 {
-      font-size: 1.5rem;
-    }
-  
-    .sidebar ul li {
-      font-size: 1rem;
-    }
-  
-    .sidebar .button {
-      padding: 8px 15px; /* Smaller button on mobile */
-      font-size: 1rem;
-    }
-  }
-  
+}

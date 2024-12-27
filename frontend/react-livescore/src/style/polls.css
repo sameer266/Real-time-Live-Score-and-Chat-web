@@ -1,8 +1,8 @@
 /* Poll container */
 .poll-container {
   width: 100%;
-  max-width: 500px; /* Adjust the max-width for larger screens */
-  margin: 40px auto;
+  max-width: 600px; /* Set max-width to 600px for medium-sized containers */
+  margin: 40px auto; /* Auto center with top margin */
   padding: 20px;
   background: #ffffff;
   border-radius: 20px; /* Modern rounded corners */
@@ -10,7 +10,7 @@
   text-align: center;
 
   position: relative;
-  margin-top: 120px; /* Spacing from the top */
+  margin-top: 80px; /* Reduced top margin for medium-size */
   overflow: hidden; /* Ensures smooth visual boundaries */
 }
 
@@ -88,7 +88,7 @@
 @media (max-width: 768px) {
   .poll-container {
     max-width: 90%;
-    margin-top: 80px; /* Adjust top margin */
+    margin-top: 60px; /* Reduced top margin for tablets */
     padding: 15px; /* Reduced padding */
   }
 

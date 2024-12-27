@@ -2,19 +2,20 @@ import React, { useEffect, useState } from "react";
 import { UploadFile, DeleteFile } from "../../data/appWrite/AppWrite";
 import { useSelector } from "react-redux";
 import { Send_Posts_Data, Get_OneUser_Data, DeletePost } from "../../data/AllPPostData";
-import '../../style/loading.css';
-import { ToastContainer,toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "../dashboard/dashboard.css";  // Assuming the CSS is saved in 'dashboard.css'
 
 const Dashboard = () => {
   const [posts, setPosts] = useState([]);
   const [title, setTitle] = useState("");
   const [file, setFile] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [editingPost, setEditingPost] = useState(null);
+  const [loading, setLoading] = useState(false);
   const { username } = useSelector((state) => state.auth);
 
-  const notify=(msg)=>toast(msg)
+  const notify = (msg) => toast(msg);
 
-  // =======Fetch User Post==========
+  // Fetch user posts
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -33,8 +34,7 @@ const Dashboard = () => {
     fetchData();
   }, [username]);
 
-
-  // ======== ADD Post========
+  // Add new post
   const handleAddPost = async () => {
     if (!title || !file) {
       alert("Title and file are required!");
@@ -53,7 +53,8 @@ const Dashboard = () => {
 
       const sendData = await Send_Posts_Data(newPost);
       if (sendData.success) {
-        notify("Post Data Success");
+        notify("Post added successfully");
+        window.location.reload();
       } else {
         alert("Error", sendData.error);
       }
@@ -68,90 +69,105 @@ const Dashboard = () => {
     }
   };
 
-
-  // =======Delete Post========
+  // Delete post
   const handleDeletePost = async (id, fileUrl) => {
     try {
       const response = await DeletePost(id);
       if (response.success) {
         await DeleteFile(fileUrl);
-        alert("Deleted Post"); //==>delete image of appwrite
+        alert("Deleted Post");
       } else {
         alert("Error deleting post");
       }
     } catch (error) {
-      console.log("Error in deleting post:", error);
+      console.log("Error deleting post:", error);
       alert("Failed to delete post. Please try again.");
     }
   };
 
+  // Edit post
+  const handleEditPost = (post) => {
+    setTitle(post.title);
+    setFile(post.image);  // Optional: If you're using the same file for editing
+    setEditingPost(post);  // Set the post being edited
+  };
+
+  const handleUpdatePost = async () => {
+    
+  };
+
   return (
     <>
-    <ToastContainer  autoClose={2000} theme="colored"/>
-    <div className="max-w-screen-md mx-auto p-6">
-      <h1 className="text-2xl font-bold text-center mb-6">
-        Welcome {username}
-      </h1>
+      <ToastContainer autoClose={2000} theme="colored" />
+      <div className="dashboard-container">
+        <h1 className="dashboard-title">Welcome {username}</h1>
 
-      {/* Add Post Section */}
-      <div className="mb-8 p-4 shadow-md rounded-md bg-gray-100">
-        <h2 className="text-xl font-semibold mb-4">Add a Post</h2>
-        <div className="flex flex-col gap-4">
-          <input
-            type="text"
-            placeholder="Post Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="border border-gray-300 rounded-md p-2"
-          />
+        {/* Add Post Section */}
+        <div className="add-post-section">
+          <h2 className="add-post-title">Create a Post</h2>
+          <div className="form">
+            <input
+              type="text"
+              placeholder="What's on your mind?"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="input-field"
+            />
+            <input
+              type="file"
+              onChange={(e) => setFile(e.target.files[0])}
+              className="input-field"
+            />
+            <button
+              onClick={handleAddPost}
+              className="add-post-button"
+              disabled={loading}
+            >
+              {loading ? <span className="loader"></span> : "Post"}
+            </button>
+          </div>
+        </div>
 
-          <input
-            type="file"
-            onChange={(e) => setFile(e.target.files[0])}
-            className="border border-gray-300 rounded-md p-2"
-          />
-          <button
-            onClick={handleAddPost}
-            className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 disabled:bg-gray-400"
-            disabled={loading}
-          >
-            {loading ? (
-              <span class="loader"></span>
-            ) : (
-              "Add Post"
-            )}
-          </button>
+        {/* Display Posts Section */}
+        <div className="posts-section">
+          <h2 className="add-post-title">Your Posts</h2>
+          {posts.length === 0 ? (
+            <p>No posts available. Add your first post!</p>
+          ) : (
+            posts.map((post) => (
+              <div key={post.id} className="post-item">
+                <div className="post-header">
+                  <p className="post-title" onClick={() => handleEditPost(post)}>
+                    {post.title}
+                  </p>
+                  <button
+                    onClick={() => handleDeletePost(post.id, post.image)}
+                    className="delete-button"
+                  >
+                    Delete
+                  </button>
+                </div>
+                {post.image && (
+                  <img
+                    src={post.image}
+                    alt="Uploaded file"
+                    className="post-image"
+                  />
+                )}
+                <p>{post.created_at}</p>
+                {editingPost && editingPost.id === post.id && (
+                  <button
+                    onClick={handleUpdatePost}
+                    className="update-button"
+                  >
+                    Update Post
+                  </button>
+                )}
+              </div>
+            ))
+          )}
         </div>
       </div>
-
-      {/* Display Posts Section */}
-      <div className="mt-8">
-        <h2 className="text-xl font-semibold mb-4">Your Posts</h2>
-        {posts.length === 0 ? (
-          <p className="text-gray-500">No posts available. Add your first post!</p>
-        ) : (
-          posts.map((post) => (
-            <div key={post.id} className="mb-4 p-4 border border-gray-300 rounded-md">
-              <p className="text-gray-700">{post.title}</p>
-              {post.image && (
-                <img
-                  src={post.image}
-                  alt="Uploaded file"
-                  className="w-full h-auto mt-2 rounded-md"
-                />
-              )}
-              <p>{post.created_at}</p>
-              <button
-                onClick={() => handleDeletePost(post.id, post.image)}
-                className="text-red-500 mt-2"
-              >
-                Delete Post
-              </button>
-            </div>
-          ))
-        )}
-      </div>
-    </div>
     </>
   );
 };

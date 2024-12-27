@@ -1,0 +1,25 @@
+/* Navbar Dropdown */
+@media (max-width: 640px) {
+    .sm\\:hidden {
+      display: none;
+    }
+  
+    .sm\\:flex {
+      display: flex;
+    }
+  
+    .absolute {
+      position: absolute;
+    }
+  }
+  
+  /* Make sure the mobile version looks clean */
+  @media (max-width: 640px) {
+    .header__right {
+      display: none; /* Hide right section on mobile */
+    }
+    .header__toggle {
+      display: block; /* Show mobile toggle button */
+    }
+  }
+  
