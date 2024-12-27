@@ -80,7 +80,8 @@ class LikePost(APIView):
             except Post.DoesNotExist:
                 return Response({"error": "Post not found.","success":False}, status=404)
 
-            user = request.user
+            username = request.user
+            user=User.objects.get(username=username)
             
             # Check if the user has already liked the post
             if Like.objects.filter(post=post, user=user).exists():
