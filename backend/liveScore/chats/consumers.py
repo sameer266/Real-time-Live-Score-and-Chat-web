@@ -11,6 +11,8 @@ from django.contrib.auth.models import User
 from chats.models import ChatRooms, Message
 
 class MyAsyncConsumer(AsyncConsumer):
+    
+    
     # -------Connection----------
     async def websocket_connect(self, event): 
 # Get query parameters from the URL
@@ -21,6 +23,7 @@ class MyAsyncConsumer(AsyncConsumer):
         username = params.get('username', [None])[0]
         password = params.get('password', [None])[0]
         user=await sync_to_async(authenticate)(username=username,password=password)
+        self.scope['user'] = user
         if (user):
             self.room_name = self.scope['url_route']['kwargs']['room']
             self.room_group_name = self.room_name
@@ -64,7 +67,7 @@ class MyAsyncConsumer(AsyncConsumer):
             try:
                 # Get or create the chat room
                 room_data, created = await database_sync_to_async(ChatRooms.objects.get_or_create)(name=self.room_group_name)
-                user= await database_sync_to_async(User.objects.get)(username="admin")
+                user= await database_sync_to_async(User.objects.get)(username=self.scope['user'].username)
                 # Get the user (can be dynamically taken from WebSocket scope)
             
                 
@@ -91,8 +94,10 @@ class MyAsyncConsumer(AsyncConsumer):
             # Send the message to the WebSocket
             message = event['message']
             print('Sending message:', message)
+            user=self.scope['user'].username
+            print('User:', user)
             await self.send({
                 "type": "websocket.send",
-                "text": json.dumps({'message': message})  # Ensure the message is wrapped in a JSON format
+                "text": json.dumps({'message': message,'user':user})  # Ensure the message is wrapped in a JSON format
             })
             print('Message sent to client.')

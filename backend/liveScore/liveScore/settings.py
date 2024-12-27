@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'chats',
     'posts',
     'dashboards',
+   
     
 ]
 

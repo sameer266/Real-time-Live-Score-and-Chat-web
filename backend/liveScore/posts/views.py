@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from posts.models import Post,Like
+from posts.models import Post,Like,Comment
 from posts.serializers import PostSerializer,LikeSerializer
 
 from rest_framework.response import Response
@@ -68,15 +68,28 @@ class PostsData(APIView):
             return Response({"error":"Error in Deleting Post","success":False},status=401)
 
 
+# ======Get one User Post=======
+class Get_OneUser_Post(APIView):
+    def get(self,request,username):
+        try:
+            if username:
+                post=Post.objects.filter(user__username=username)
+                serializer=PostSerializer(post,many=True)
+                return Response({"message":"Succes to get Post by user","success":True,"data":serializer.data},status=201)
+        except Exception as e:
+            return Response({"error":str(e),"success":False})
+        
+
+
 # ===========When user likes a post, save to DB===============
 class LikePost(APIView):
     
     # sing decorator deoestnot override global setting
     @authentication_classes([SessionAuthentication])
     @permission_classes([IsAuthenticated])
+    # Like a post
     def post(self, request,id):
         try:
-            
             try:
                 post = Post.objects.get(id=id)
             except Post.DoesNotExist:
@@ -96,15 +109,72 @@ class LikePost(APIView):
         except Exception as e:
             return Response({"error":str(e),"success":False},status=400)    
 
-# ======Get one User Post=======
-class Get_OneUser_Post(APIView):
-    def get(self,request,username):
+    # Delete like
+    def delete(self,request,id):
         try:
-            if username:
-                post=Post.objects.filter(user__username=username)
-                serializer=PostSerializer(post,many=True)
-                return Response({"message":"Succes to get Post by user","success":True,"data":serializer.data},status=201)
+            try:
+                post = Post.objects.get(id=id)
+            except Post.DoesNotExist:
+                return Response({"error": "Post not found.","success":False}, status=404)
+
+            username=request.data.get('username')
+            user=User.objects.get(username=username)
+            
+            # Check if the user has already liked the post
+            if Like.objects.filter(post=post, user=user).exists():
+                like=Like.objects.filter(post=post, user=user)
+                like.delete()
+                return Response({"message": "You have unliked the post.","success":True}, status=201)
+            else:
+                return Response({"error": "You have not liked this post.","success":False}, status=400)
         except Exception as e:
-            return Response({"error":str(e),"success":False})
-        
+            return Response({"error":str(e),"success":False},status=400)
+
+
+
+# ===========Post Comments in post================
+class CommentPost(APIView):
     
+    # this decorator deoestnot override global setting
+    @authentication_classes([SessionAuthentication])
+    @permission_classes([IsAuthenticated])
+    # Comment on a post
+    def post(self, request,id):
+        try:
+            try:
+                post = Post.objects.get(id=id)
+            except Post.DoesNotExist:
+                return Response({"error": "Post not found.","success":False}, status=404)
+
+            username=request.data.get('username')
+            user=User.objects.get(username=username)
+            content=request.data.get('content')
+            
+            # Create and save the Comment entry
+            Comment.objects.create(post=post, user=user,content=content)
+            return Response({"message": "You have commented on the post.","success":True}, status=201)
+        
+        except Exception as e:
+            return Response({"error":str(e),"success":False},status=400)    
+
+    # Delete Comment
+    def delete(self,request,id):
+        try:
+            try:
+                post = Post.objects.get(id=id)
+            except Post.DoesNotExist:
+                return Response({"error": "Post not found.","success":False}, status=404)
+
+            username=request.data.get('username')
+            user=User.objects.get(username=username)
+            content=request.data.get('content')
+            
+            # Check if the user has already liked the post
+            if Comment.objects.filter(post=post, user=user,content=content).exists():
+                comment=Comment.objects.filter(post=post, user=user,content=content)
+                comment.delete()
+                return Response({"message": "You have deleted the comment.","success":True}, status=201)
+            else:
+                return Response({"error": "You have not commented on this post.","success":False}, status=400)
+        except Exception as e:
+            return Response({"error":str(e),"success":False},status=400)

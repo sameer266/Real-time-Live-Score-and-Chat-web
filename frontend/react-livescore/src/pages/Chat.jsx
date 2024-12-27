@@ -1,6 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import '../style/chat.css'
+
+// icon
+import { MdGroups2 } from "react-icons/md";
+// css
+import '../style/chat.css';
 
 function Chat() {
   return (
@@ -8,11 +12,11 @@ function Chat() {
 
       <ul>
 
-        <Link to="/chat/Barca-group/">Visca Barca</Link>
-        <Link to="/chat/RealMadrid-group/">Halla Madrid</Link>
-        <Link to="/chat/liverpool-group/">Liverpool Fc</Link>
-        <Link to ="/chat/Manchester-united/">Manchester United</Link>
-        <Link to ="/chat/Manchester-city/">Manchester city</Link>
+        <Link to="/chat/Barca-group/">Visca Barca <MdGroups2 /> </Link>
+        <Link to="/chat/RealMadrid-group/">Halla Madrid  <MdGroups2 /></Link>
+        <Link to="/chat/liverpool-group/">Liverpool Fc <MdGroups2 /></Link>
+        <Link to ="/chat/Manchester-united/">Manchester United <MdGroups2 /></Link>
+        <Link to ="/chat/Manchester-city/">Manchester city <MdGroups2 /></Link>
 
       </ul>
     </div>

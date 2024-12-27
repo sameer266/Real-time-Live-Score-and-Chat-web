@@ -3,83 +3,89 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 50px;
+  padding: 20px;
+  background-color: #f0f2f5; /* Light background for the entire page */
 }
 
 .page-title {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: bold;
-  color: #333;
-  margin-bottom: 20px;
+  color: #222;
+  margin-bottom: 30px;
+  text-align: center;
 }
 
 /* Post Card */
 .post-card {
   background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+  border-radius: 16px; /* Rounded corners for a sleek look */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Smooth shadow for depth */
+  margin-bottom: 30px;
   padding: 20px;
-  max-width: 700px;
+  max-width: 800px;
   width: 100%;
-  transition: transform 0.2s ease;
+  border: 1px solid #ddd; /* Subtle border for definition */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .post-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Slightly more pronounced hover effect */
 }
 
+/* Header */
 .post-header {
   display: flex;
   align-items: center;
+  margin-bottom: 15px;
 }
 
 .avatar {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   object-fit: cover;
+  border: 2px solid #eee; /* Thin border around the avatar */
 }
 
 .user-info {
-  margin-left: 10px;
+  margin-left: 15px;
 }
 
 .username {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: bold;
   color: #333;
 }
 
 .timestamp {
-  font-size: 0.9rem;
-  color: #888;
+  font-size: 0.85rem;
+  color: #aaa;
 }
 
+/* Title and Content */
 .post-title {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: 600;
   color: #333;
-  margin-top: 10px;
+  margin-bottom: 15px;
 }
 
 .post-image {
   width: 100%;
-  height: auto;
-  margin-top: 15px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  object-fit: cover;
+  border-radius: 12px;
+  margin-top: 10px;
   margin-bottom: 15px;
-
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
 }
 
-
-
-/* Post Footer */
+/* Footer with Actions */
 .post-footer {
   display: flex;
-  align-items: center;
   justify-content: space-between;
   margin-top: 15px;
 }
@@ -88,145 +94,76 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 5px 15px;
-  background-color: transparent;
-  border: 1px solid #ddd;
-  border-radius: 25px;
+  padding: 8px 18px;
+  background-color: #f8f8f8; /* Light background for buttons */
+  border: 1px solid #ccc;
+  border-radius: 30px;
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
-/* In your home.css */
 .like-btn.liked {
-  color: red;  /* This will change the color of the text to red */
-  border-color: red;  /* Change the button border color to red */
+  background-color: #fff0f0; /* Soft red background for liked state */
+  color: red;
+  border-color: red;
 }
 
 .like-btn.liked .icon {
-  color: red; /* Make sure the heart icon also turns red */
+  color: red;
 }
 
-/* Hover styles */
 .like-btn:hover,
 .comment-btn:hover {
-  background-color: #f0f0f0;
+  background-color: #eaeaea;
   border-color: #007bff;
 }
 
 .icon {
-  margin-right: 5px;
+  margin-right: 8px;
 }
 
-.like-btn,
-.comment-btn {
-  color: #555;
-}
-
-.like-btn:hover,
-.comment-btn:hover {
-  color: #007bff;
-}
-
-/* Sidebar Toggle Button */
+/* Sidebar */
 .toggle-sidebar-btn {
   position: fixed;
-  top: 85px;
+  top: 100px;
   left: 20px;
-  background-color: #fff;
+  background-color: #007bff;
+  color: white;
   border: none;
-  padding: 12px;
+  padding: 14px;
   border-radius: 50%;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   z-index: 1000;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .toggle-sidebar-btn:hover {
-  background-color: #f5f5f5;
-}
-
-.sidebar-icon {
-  font-size: 24px;
-  color: #333;
-  transition: color 0.3s ease;
-}
-
-.toggle-sidebar-btn:hover .sidebar-icon {
-  color: #007bff;
-}
-
-/* Sidebar Styles */
-.sidebar {
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 250px;
-  background-color: #fff;
-  padding: 20px;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
-  z-index: 999;
-}
-
-.sidebar.show {
-  transform: translateX(0);
-}
-
-.sidebar.hide {
-  transform: translateX(-100%);
-}
-
-.sidebar h2 {
-  margin-top: 0;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar ul li {
-  margin: 15px 0;
-}
-
-.sidebar ul li a {
-  text-decoration: none;
-  color:white;
-  font-weight: bold;
-  font-size: 1.1rem;
-  transition: color 0.3s ease;
-}
-
-.sidebar ul li a:hover {
-  color: #007bff;
+  background-color: #0056b3;
+  transform: scale(1.1); /* Slightly enlarge on hover */
 }
 
 /* No Posts Message */
 .no-posts {
-  color: #888;
+  color: #666;
   font-size: 1.1rem;
   text-align: center;
   margin-top: 30px;
 }
 
-/* Sidebar Close Button */
-.sidebar .close-btn {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: transparent;
-  border: none;
-  font-size: 1.5rem;
-  color: #333;
-  cursor: pointer;
-}
+/* Responsive Design */
+@media (max-width: 768px) {
+  .post-card {
+    padding: 15px;
+  }
 
-.sidebar .close-btn:hover {
-  color: #007bff;
+  .sidebar {
+    width: 250px;
+  }
+
+  .toggle-sidebar-btn {
+    top: 80px;
+    left: 15px;
+  }
 }

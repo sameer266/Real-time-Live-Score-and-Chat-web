@@ -3,7 +3,7 @@ from django.contrib import admin
 from  chats.models import ChatRooms,Message
 from matches.models import Match,Tournament,Team
 from polls.models import Poll,Vote
-from posts.models import Post,Like
+from posts.models import Post,Like,Comment
 
 # Register your models here.
 # ==========Chat app=============
@@ -39,7 +39,6 @@ class AdminTournament(admin.ModelAdmin):
     inlines=[MatchInline]
     
        
-    
 @admin.register(Team)
 class AdminTeam(admin.ModelAdmin):
     list_display=('name',)    
@@ -66,3 +65,7 @@ class AdminPost(admin.ModelAdmin):
 @admin.register(Like)
 class AdminLike(admin.ModelAdmin):
     list_display=('user','post','created_at')
+    
+@admin.register(Comment)
+class AdminComment(admin.ModelAdmin):
+    list_display=('user','post','content','created_at')

@@ -50,7 +50,7 @@ const Send_Posts_Data = async (posts_data) => {
   }
 };
 
-// ==========Delet post=======
+// ==========Delete post=======
 
 const DeletePost = async (id) => {
   try {
@@ -91,6 +91,43 @@ const LikePost = async (id,username) => {
   }
 };
 
+// =====dislike post====
+const DislikePost = async (id,username) => {
+  try {
+    
+    const response = await axios.post(
+      `http://127.0.0.1:8000/posts/dislike-posts/${id}/`,
+       {username:username},
+      {withCredentials: true})
+      console.log(response.data);
+      return response.data;
 
-export { Get_Posts_Data, Send_Posts_Data, DeletePost, Get_OneUser_Data, LikePost };
+    }
+    catch (error) {
+      console.error('Error in sending dislike to server:', error.response);
+      alert( error.response.data.error);
+    }
+  }
+
+
+  // ======Comment on post====
+  const CommentPost = async (id,username,comment) => {
+    try {
+      
+      const response = await axios.post(
+        `http://127.0.0.1:8000/posts/comment-posts/${id}/`,
+        {username:username,
+          comment:comment},
+          {withCredentials: true});
+        console.log(response.data);
+        return response.data;
+    }
+    catch (error) {
+      console.error('Error in sending comment to server:', error.response);
+      alert( error.response.data.error);
+    }
+  }
+
+
+export { Get_Posts_Data, Send_Posts_Data, DeletePost, Get_OneUser_Data, LikePost,DislikePost,CommentPost };
 

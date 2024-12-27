@@ -1,159 +1,124 @@
-/* Sidebar Overlay */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100%;
+  background-color: #1e293b; /* Dark background for contrast */
+  color: #ffffff; /* White text for readability */
+  padding: 20px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+  transform: translateX(-100%);
+  z-index: 1000;
+}
+
+.sidebar.show {
+  transform: translateX(0);
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.4);
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #334155; /* Subtle divider */
+  padding-bottom: 15px;
+}
+
+.sidebar-header h2 {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+  color: #3b82f6; /* Accent color for branding */
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.2s, color 0.3s;
+}
+
+.close-btn:hover {
+  color: #3b82f6; /* Accent color on hover */
+  transform: scale(1.1);
+}
+
+.sidebar-links {
+  margin-top: 25px;
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar-links li {
+  margin: 15px 0;
+}
+
+.sidebar-links a {
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar-links a:hover {
+  background-color: #334155; /* Darker shade for hover */
+  color: #3b82f6; /* Accent color for hover */
+}
+
+.sidebar-links a.active {
+  background-color: #3b82f6; /* Highlighted background for active link */
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #334155; /* Subtle divider */
+  padding-top: 15px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.user-info p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.user-info span {
+  font-size: 14px;
+  color: #9ca3af; /* Muted text for secondary information */
+}
+
 .sidebar-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
   z-index: 999;
-  visibility: hidden;
   opacity: 0;
-  transition: visibility 0.3s, opacity 0.3s ease-in-out;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .sidebar-overlay.show {
-  visibility: visible;
   opacity: 1;
-}
-
-/* Sidebar Styles */
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: -250px; /* Hidden by default */
-  width: 250px;
-  height: 100%;
-  background-color: #333;
-  color: white;
-  transition: left 0.3s ease-in-out;
-  z-index: 1000;
-  padding-top: 60px; /* Add space for header */
-  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1);
-}
-
-.sidebar.show {
-  left: 0; /* Slide in when visible */
-}
-
-.sidebar.hide {
-  left: -250px; /* Slide out when hidden */
-}
-
-/* Sidebar Header */
-.sidebar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 15px;
-}
-
-.sidebar-header h2 {
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: #fff;
-  margin: 0;
-  letter-spacing: 1px; /* Adds some space between letters */
-}
-
-.close-btn {
-  background: transparent;
-  border: none;
-  font-size: 1.5rem;
-  color: #fff;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-.close-btn:hover {
-  color: #ff6347; /* Change color on hover */
-}
-
-/* Sidebar Links */
-.sidebar-links {
-  list-style: none;
-  padding: 0;
-  margin-top: 20px;
-}
-
-.sidebar-links li {
-  padding: 15px 20px;
-  border-bottom: 1px solid #444;
-}
-
-.sidebar-links li a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 1.2rem;
-  display: block;
-  transition: background-color 0.3s ease, padding-left 0.3s ease, color 0.3s ease;
-}
-
-.sidebar-links li a:hover {
-  background-color: #444;
-  padding-left: 10px; /* Indentation effect on hover */
-}
-
-.sidebar-links li a:active {
-  color: #ff6347; /* Active link color */
-}
-
-/* Sidebar Footer (Optional for additional links) */
-.sidebar-footer {
-  margin-top: 20px;
-  padding: 15px;
-  text-align: center;
-  color: #fff;
-}
-
-.sidebar-footer a {
-  color: #ff6347;
-  text-decoration: none;
-  font-size: 1rem;
-}
-
-.sidebar-footer a:hover {
-  text-decoration: underline;
-}
-
-/* Improved Animation */
-@keyframes slideIn {
-  0% {
-    left: -250px;
-  }
-  100% {
-    left: 0;
-  }
-}
-
-@keyframes slideOut {
-  0% {
-    left: 0;
-  }
-  100% {
-    left: -250px;
-  }
-}
-
-.sidebar.show {
-  animation: slideIn 0.3s ease-out;
-}
-
-.sidebar.hide {
-  animation: slideOut 0.3s ease-in;
-}
-
-/* Responsive Design */
-@media screen and (max-width: 768px) {
-  .sidebar {
-    width: 200px;
-  }
-
-  .sidebar-header h2 {
-    font-size: 1.4rem;
-  }
-
-  .sidebar-links li a {
-    font-size: 1.1rem;
-  }
+  visibility: visible;
 }

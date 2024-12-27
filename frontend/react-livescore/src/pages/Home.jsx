@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Get_Posts_Data, LikePost } from "../data/AllPPostData"; // Function to fetch posts
-import { PiUserListFill } from "react-icons/pi"; // Sidebar icon
-import { FaHeart, FaComment } from "react-icons/fa"; // Like and Comment icons
+import { Get_Posts_Data, LikePost, CommentPost } from "../data/AllPPostData";
+import { PiUserListFill } from "react-icons/pi";
+import { FaHeart, FaComment } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
-import Avatar from "../assets/images/man.png"; // Default Avatar
-import "../style/home.css"; // Import CSS file
-import Slidebar from "../components/Slidebar"; // Import Sidebar component
+import Avatar from "../assets/images/man.png";
+import "../style/home.css";
+import Slidebar from "../components/Slidebar";
+import Comments from "../components/Comments";
 
 const Home = () => {
-  const [posts, setPosts] = useState([]); // State to store posts
-  const [isSidebarVisible, setIsSidebarVisible] = useState(false); // State to track sidebar visibility
-  const [likedPosts, setLikedPosts] = useState({}); // Object to track liked posts
-  const localStorage_username = localStorage.getItem('username'); // Get username from localStorage
+  const [posts, setPosts] = useState([]);
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+  const [activePost, setActivePost] = useState(null); // Track the post for the modal
+  const localStorage_username = localStorage.getItem("username"); // Current user
 
-  // Notification function
   const notify = (msg) => toast(msg);
 
-  // Fetch posts from the server
+  // Fetch posts from API
   const fetchPosts = async () => {
     try {
       const data = await Get_Posts_Data();
@@ -30,37 +30,28 @@ const Home = () => {
     fetchPosts();
   }, []);
 
-  // Send like to server
+  // Handle like
   const sendLike = async (id, username) => {
     if (!localStorage_username) {
-      alert('Please login to like the post');
+      alert("Please login to like the post");
       return;
     }
-
     try {
       const response = await LikePost(id, username);
       if (response.success) {
-        // Update liked posts state locally for immediate UI feedback
-        setLikedPosts((prev) => ({
-          ...prev,
-          [id]: !prev[id], // Toggle the like state
-        }));
-        // Re-fetch posts to get the updated like count from the server
-        fetchPosts();
-        notify(response.message || 'Liked'); // Show notification
+        fetchPosts(); // Refresh posts to reflect updated likes
+        notify(response.message || "Liked");
       }
     } catch (error) {
       console.error("Error liking post:", error);
-      toast.error('Failed to like the post.');
+      toast.error("Failed to like the post.");
     }
   };
 
-  // Toggle Sidebar visibility
   const toggleSidebar = () => {
     setIsSidebarVisible(!isSidebarVisible);
   };
 
-  // Hide Sidebar
   const hideSidebar = () => {
     setIsSidebarVisible(false);
   };
@@ -69,24 +60,19 @@ const Home = () => {
     <>
       <ToastContainer autoClose={2000} />
       <div className="home">
-        {/* Button to toggle sidebar */}
         {!isSidebarVisible && (
           <button className="toggle-sidebar-btn" onClick={toggleSidebar}>
             <PiUserListFill className="sidebar-icon" />
           </button>
         )}
-
-        {/* Sidebar Component */}
         <Slidebar toggleSidebar={isSidebarVisible} hideSidebar={hideSidebar} />
 
-        {/* Main Content */}
         <div className="content">
           <h1 className="page-title">News Feed</h1>
           <div className="posts">
             {posts.length > 0 ? (
               posts.map((post, index) => (
                 <div key={index} className="post-card">
-                  {/* Post Header */}
                   <div className="post-header">
                     <img
                       src={post.user?.avatar || Avatar}
@@ -98,27 +84,26 @@ const Home = () => {
                       <span className="timestamp">{new Date(post.created_at).toLocaleString()}</span>
                     </div>
                   </div>
-
-                  {/* Post Content */}
                   <p className="post-title">{post.title}</p>
-
-                  {/* Post Image */}
                   {post.image && (
                     <img src={post.image} alt="Post" className="post-image" />
                   )}
-
-                  {/* Post Footer */}
                   <div className="post-footer">
                     <button
-                      className={`action-button like-btn ${likedPosts[post.id] ? 'liked' : ''}`}
-                      onClick={() => sendLike(post.id, post.user.username)}
+                      className={`action-button like-btn ${
+                        post.liked_users.includes(localStorage_username) ? "liked" : ""
+                      }`}
+                      onClick={() => sendLike(post.id, localStorage_username)}
                     >
                       <FaHeart className="icon" />
                       {post.likes_count}
                     </button>
-                    <button className="action-button comment-btn">
+                    <button
+                      className="action-button comment-btn"
+                      onClick={() => setActivePost(post)}
+                    >
                       <FaComment className="icon" />
-                      Comment
+                      {post.comments_count}
                     </button>
                   </div>
                 </div>
@@ -128,6 +113,13 @@ const Home = () => {
             )}
           </div>
         </div>
+        {activePost && (
+          <Comments
+            isVisible={!!activePost}
+            onClose={() => setActivePost(null)}
+            post={activePost}
+          />
+        )}
       </div>
     </>
   );
