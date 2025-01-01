@@ -25,7 +25,7 @@ class MyAsyncConsumer(AsyncConsumer):
         user=await sync_to_async(authenticate)(username=username,password=password)
         self.scope['user'] = user
         if (user):
-            self.room_name = self.scope['url_route']['kwargs']['room']
+            self.room_room = self.scope['url_route']['kwargs']['room']
             self.room_group_name = self.room_name
             
             # Add the channel to the group

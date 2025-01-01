@@ -4,6 +4,7 @@ from  chats.models import ChatRooms,Message
 from matches.models import Match,Tournament,Team
 from polls.models import Poll,Vote
 from posts.models import Post,Like,Comment
+from  profile_user.models import Profile
 
 # Register your models here.
 # ==========Chat app=============
@@ -68,4 +69,10 @@ class AdminLike(admin.ModelAdmin):
     
 @admin.register(Comment)
 class AdminComment(admin.ModelAdmin):
-    list_display=('user','post','content','created_at')
+    list_display=('user','post','content','avatar','created_at')
+    
+    
+# ============= Profile app================
+@admin.register(Profile)
+class AdminProfile(admin.ModelAdmin):
+    list_display=('user','avatar','bio')

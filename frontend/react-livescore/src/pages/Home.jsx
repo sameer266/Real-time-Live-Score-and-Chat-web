@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Get_Posts_Data, LikePost, CommentPost } from "../data/AllPPostData";
+import { Get_Posts_Data, LikePost, CommentPost } from "../data/AllPostData";
 import { PiUserListFill } from "react-icons/pi";
 import { FaHeart, FaComment } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
@@ -7,16 +7,18 @@ import Avatar from "../assets/images/man.png";
 import "../style/home.css";
 import Slidebar from "../components/Slidebar";
 import Comments from "../components/Comments";
+import { useSelector } from "react-redux";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
   const [activePost, setActivePost] = useState(null); // Track the post for the modal
-  const localStorage_username = localStorage.getItem("username"); // Current user
-
+  const {username} = useSelector((state) => state.auth);
+  const {avatar}=useSelector((state)=>state.auth);
+  console.log("Avatar:",avatar,username);
   const notify = (msg) => toast(msg);
 
-  // Fetch posts from API
+  // ====Fetch posts from API===
   const fetchPosts = async () => {
     try {
       const data = await Get_Posts_Data();
@@ -30,9 +32,9 @@ const Home = () => {
     fetchPosts();
   }, []);
 
-  // Handle like
+  // ======= Handle Like Post ============
   const sendLike = async (id, username) => {
-    if (!localStorage_username) {
+    if (!username) {
       alert("Please login to like the post");
       return;
     }
@@ -58,6 +60,8 @@ const Home = () => {
 
   return (
     <>
+
+    {/* === Show notification on like==== */}
       <ToastContainer autoClose={2000} />
       <div className="home">
         {!isSidebarVisible && (
@@ -65,18 +69,24 @@ const Home = () => {
             <PiUserListFill className="sidebar-icon" />
           </button>
         )}
+
+        
+        {/* ====== Slidebar components  ======== */}
         <Slidebar toggleSidebar={isSidebarVisible} hideSidebar={hideSidebar} />
 
         <div className="content">
           <h1 className="page-title">News Feed</h1>
           <div className="posts">
+
+
+            {/* ======= Fetching api data of posts ============ */}
             {posts.length > 0 ? (
               posts.map((post, index) => (
                 <div key={index} className="post-card">
                   <div className="post-header">
                     <img
-                      src={post.user?.avatar || Avatar}
-                      alt={post.user?.username || "User"}
+                      src={avatar}
+                      alt={post.user?.username}
                       className="avatar"
                     />
                     <div className="user-info">
@@ -89,15 +99,19 @@ const Home = () => {
                     <img src={post.image} alt="Post" className="post-image" />
                   )}
                   <div className="post-footer">
+
+                    {/* ======== Button Like ======== */}
                     <button
                       className={`action-button like-btn ${
-                        post.liked_users.includes(localStorage_username) ? "liked" : ""
+                        post.liked_users.includes(username) ? "liked" : ""
                       }`}
-                      onClick={() => sendLike(post.id, localStorage_username)}
+                      onClick={() => sendLike(post.id, username)}
                     >
                       <FaHeart className="icon" />
                       {post.likes_count}
                     </button>
+
+                    {/* ======== Button Comment ======== */}
                     <button
                       className="action-button comment-btn"
                       onClick={() => setActivePost(post)}
@@ -111,6 +125,7 @@ const Home = () => {
             ) : (
               <p className="no-posts">No posts available</p>
             )}
+
           </div>
         </div>
         {activePost && (

@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import { FiX } from "react-icons/fi";
 import "../style/slidebar.css"; // Add your CSS file
 
+import {  CgData } from "react-icons/cg"; //Icon logo
+
 const Slidebar = ({ toggleSidebar, hideSidebar }) => {
-  const { username, role } = useSelector((state) => state.auth); // Assuming Redux provides username and role
+  const { username  } = useSelector((state) => state.auth); // Assuming Redux provides username and role
   const [isSidebarVisible, setIsSidebarVisible] = useState(toggleSidebar);
 
   useEffect(() => {
@@ -24,43 +26,52 @@ const Slidebar = ({ toggleSidebar, hideSidebar }) => {
       {isSidebarVisible && <div className="sidebar-overlay" onClick={hideSidebar}></div>}
 
       <div className={`sidebar ${isSidebarVisible ? "show" : "hide"}`}>
-        {/* Header */}
+
+        {/*======== Header ===========*/}
         <div className="sidebar-header">
-          <h2>CODEPEN</h2>
+          <CgData color="#20ffae" size={24} />
+          <h2 style={{color:"#20ffae"}}>WE SCORE</h2>
           <button className="close-btn" onClick={hideSidebar}>
             <FiX />
           </button>
         </div>
 
-        {/* Links */}
+        {/*======= Links ========= */}
         <ul className="sidebar-links">
           <li>
             <Link
-              to="/following"
-              className={activeLink === "following" ? "active" : ""}
-              onClick={() => handleLinkClick("following")}
+              to="/dashboard"
+              className={activeLink === "dashboard" ? "active" : ""}
+              onClick={() => handleLinkClick("dashboard")}
             >
-              Following
+              Dashboard
             </Link>
           </li>
+
+          {/* =========== Trending ============== */}
           <li>
             <Link
-              to="/trending"
-              className={activeLink === "trending" ? "active" : ""}
-              onClick={() => handleLinkClick("trending")}
+              to="/"
+              className={activeLink === "home" ? "active" : ""}
+              onClick={() => handleLinkClick("home")}
             >
-              Trending
+              Home
             </Link>
           </li>
+
+
+          {/* =========Challenging =============== */}
           <li>
             <Link
-              to="/challenges"
-              className={activeLink === "challenges" ? "active" : ""}
-              onClick={() => handleLinkClick("challenges")}
+              to="/story"
+              className={activeLink === "story" ? "active" : ""}
+              onClick={() => handleLinkClick("story")}
             >
-              Challenges
+              Story
             </Link>
           </li>
+
+          {/* ========Spark =============== */}
           <li>
             <Link
               to="/spark"
@@ -70,23 +81,15 @@ const Slidebar = ({ toggleSidebar, hideSidebar }) => {
               Spark
             </Link>
           </li>
-          <li>
-            <Link
-              to="/pro"
-              className={activeLink === "pro" ? "active" : ""}
-              onClick={() => handleLinkClick("pro")}
-            >
-              CodePen Pro
-            </Link>
-          </li>
+
         </ul>
 
-        {/* Footer */}
+        {/*=========== Footer ============*/}
         <div className="sidebar-footer">
           {username && (
             <div className="user-info">
-              <p>{username}</p>
-              <span>{role}</span>
+              <p style={{color:"red"}}>{username.toUpperCase()}</p>
+             
             </div>
           )}
         </div>

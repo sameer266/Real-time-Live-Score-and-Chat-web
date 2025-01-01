@@ -48,6 +48,9 @@ const LogoutAuth=async (username)=>{
     const response= await axios.post('http://127.0.0.1:8000/logout/',
         {
             "username":username
+        },
+        {
+            withCredentials:true
         }
 
     );

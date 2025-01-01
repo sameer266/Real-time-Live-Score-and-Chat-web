@@ -29,7 +29,7 @@ function Login() {
       const username = response.username;
       localStorage.setItem('isAuthenticated', true); // Set authentication state
       localStorage.setItem('username', username); // Store username
-      dispatch(login(username)); // Update Redux state
+      dispatch(login(username));
 
       // Delay navigation to allow the notification to show
       setTimeout(() => {

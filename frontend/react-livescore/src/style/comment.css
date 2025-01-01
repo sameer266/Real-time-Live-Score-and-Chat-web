@@ -1,72 +1,166 @@
+/* Modal Overlay */
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .modal-content {
-    background: #fff;
-    border-radius: 8px;
-    width: 90%;
-    max-width: 500px;
-    padding: 20px;
-    position: relative;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .close-button {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
-  
-  .comments-section {
-    margin: 15px 0;
-    max-height: 300px;
-    overflow-y: auto;
-  }
-  
-  .comment {
-    margin-bottom: 10px;
-  }
-  
-  .comment-input-section {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .comment-input {
-    flex-grow: 1;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-  }
-  
-  .add-comment-button {
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .add-comment-button:hover {
-    background-color: #0056b3;
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Slightly darker overlay for better focus */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal Content */
+.modal-content {
+  background: #ffffff;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  padding: 20px;
+  position: relative;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Stronger shadow for emphasis */
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+}
+
+.close-button:hover {
+  color: #ff5f5f;
+}
+
+/* Comments Section */
+.comments-section {
+  margin: 15px 0;
+  max-height: 300px;
+  overflow-y: auto;
+  background-color: #222; /* Dark background for better contrast */
+  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid #444;
+}
+
+/* Individual Comment */
+.comment {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #fff;
+  padding: 5px;
+  border-bottom: 1px solid #333;
+}
+
+.comment:last-child {
+  border-bottom: none;
+}
+
+/* Comment Avatar */
+.comment-avatar {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.comment-avatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+/* Comment Username */
+.comment-username {
+  color: #ff6347; /* Tomato color for username */
+  font-weight: bold;
+  margin-bottom: 2px;
+  font-size: 14px;
+}
+
+/* Comment Text */
+.comment p {
+  color: #c3c3c3; /* Light grey for readability */
+  font-size: 13px;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Comment Input Section */
+.comment-input-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.comment-input {
+  flex-grow: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.comment-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Add Comment Button */
+.add-comment-button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 14px;
+}
+
+.add-comment-button:hover {
+  background-color: #0056b3;
+}
+
+.add-comment-button:disabled {
+  background-color: #b0c4de;
+  cursor: not-allowed;
+}
+
+/* No Comments Message */
+.no-comments {
+  text-align: center;
+  color: #aaa;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+/* Comment Delete Icon */
+.comment-delete {
+  margin-left: auto;
+  color: #ff5f5f;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.comment-delete:hover {
+  color: #ff2e2e;
+}

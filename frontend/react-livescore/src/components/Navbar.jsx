@@ -1,23 +1,51 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-
+import { useSelector ,useDispatch} from "react-redux";
 // Icons
 import { CgHome, CgPoll, CgData } from "react-icons/cg";
-import { FiLogOut } from "react-icons/fi";
+import { FiLogOut } from "react-icons/fi";  // Logout icon from FiLogOut
 import { MdChat, MdMoreHoriz } from "react-icons/md"; // Chat icon from MdChat
 
 import "../style/navbar.css"
 
+import axios from "axios";
+
+
+
 const Navbar = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
-  const navigate = useNavigate();
+  const { avatar} = useSelector((state) => state.auth.avatar);
 
   const location = useLocation();
   const path = location.pathname;
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMatchesDropdownOpen, setIsMatchesDropdownOpen] = useState(false);
+
+
+  useEffect( () => {
+
+    const fetchData = async () => {
+      try{
+    if (isAuthenticated){
+      const response = await axios.get('http://127.0.0.1:8000/profile/get-profile-img/',
+        { withCredentials: true }
+      );
+      console.log("Profile Image:", response);
+      let avatar_url=response.data.profile_user.avatar;
+      localStorage.setItem("avatar",avatar_url);
+      
+
+    }
+  }
+  catch(error){
+    console.log("Error in fetching profile image",error);
+  }
+};
+fetchData();
+
+
+  }, []);
 
   const handleToggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -36,6 +64,7 @@ const Navbar = () => {
     <>
       <header className="fixed top-0 left-0 right-0 z-50 flex shadow-md py-2 px-4 sm:px-6 bg-white font-[sans-serif] min-h-[75px] tracking-wide">
         <div className="flex items-center justify-between w-full max-w-screen-xl mx-auto">
+          
           {/* Left Section: Logo */}
           <Link to="/" className="flex items-center font-bold text-lg">
             <CgData color="red" size={24} />

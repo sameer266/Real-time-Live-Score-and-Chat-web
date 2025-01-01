@@ -42,12 +42,15 @@ INSTALLED_APPS = [
     
     'rest_framework',
     'corsheaders',
+    'django_extensions',
+
     
     'matches',
     'polls',
     'chats',
     'posts',
-    'dashboards',
+    'profile_user',
+  
    
     
 ]
@@ -144,12 +147,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-# ====================
-# =======Authentication=====
+# # ===============================
+# # ============== rest_framework authentication setup=====
+# # ===============================
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSES': [
-#         'rest_framework.authentication.BasicAuthentication',
+#         'rest_framework.authentication.SessionAuthentication',
        
 #     ],
 #     'DEFAULT_PERMISSION_CLASSES': [

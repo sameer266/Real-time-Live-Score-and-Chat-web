@@ -11,10 +11,18 @@ urlpatterns = [
     path('signup/',views.Signup.as_view()),
     path('logout/',views.Logout.as_view()),
     
+    # ====== Chat app ======
     path('chat/',include('chats.urls')),
+    
+    # ====== Matches app ======
     path('matches/',include('matches.urls')),
+    
+    #  ===== pOlls app ==========
     path('polls/',include('polls.urls')),
     path('posts/',include('posts.urls')),
+    
+    # ===== Profile User image =====
+    path('profile/',include('profile_user.urls')),
     
     
 ]

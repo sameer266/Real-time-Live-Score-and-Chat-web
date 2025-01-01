@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { UploadFile, DeleteFile } from "../../data/appWrite/AppWrite";
+import { UploadFile, DeleteFile } from "../../data/appWrite/PostImg_appwrite";
 import { useSelector } from "react-redux";
-import { Send_Posts_Data, Get_OneUser_Data, DeletePost } from "../../data/AllPPostData";
+import { Send_Posts_Data, Get_OneUser_Data, DeletePost } from "../../data/AllPostData";
 import { ToastContainer, toast } from "react-toastify";
 import "../dashboard/dashboard.css";  // Assuming the CSS is saved in 'dashboard.css'
 
@@ -15,7 +15,7 @@ const Dashboard = () => {
 
   const notify = (msg) => toast(msg);
 
-  // Fetch user posts
+  //============== Fetch user posts ============
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -34,7 +34,7 @@ const Dashboard = () => {
     fetchData();
   }, [username]);
 
-  // Add new post
+  //======== Add new post =========
   const handleAddPost = async () => {
     if (!title || !file) {
       alert("Title and file are required!");
@@ -69,7 +69,7 @@ const Dashboard = () => {
     }
   };
 
-  // Delete post
+  //========= Delete post===========
   const handleDeletePost = async (id, fileUrl) => {
     try {
       const response = await DeletePost(id);
@@ -85,7 +85,7 @@ const Dashboard = () => {
     }
   };
 
-  // Edit post
+  //============ Edit post =============
   const handleEditPost = (post) => {
     setTitle(post.title);
     setFile(post.image);  // Optional: If you're using the same file for editing
@@ -96,13 +96,15 @@ const Dashboard = () => {
     
   };
 
+
+
   return (
     <>
       <ToastContainer autoClose={2000} theme="colored" />
       <div className="dashboard-container">
         <h1 className="dashboard-title">Welcome {username}</h1>
 
-        {/* Add Post Section */}
+        {/*====== Add Post Section ======== */}
         <div className="add-post-section">
           <h2 className="add-post-title">Create a Post</h2>
           <div className="form">
@@ -128,7 +130,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Display Posts Section */}
+        {/*==== Display Posts Section ===== */}
         <div className="posts-section">
           <h2 className="add-post-title">Your Posts</h2>
           {posts.length === 0 ? (

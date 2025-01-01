@@ -109,7 +109,7 @@ class LikePost(APIView):
         except Exception as e:
             return Response({"error":str(e),"success":False},status=400)    
 
-    # Delete like
+    # ===Delete like
     def delete(self,request,id):
         try:
             try:
@@ -148,7 +148,7 @@ class CommentPost(APIView):
 
             username=request.data.get('username')
             user=User.objects.get(username=username)
-            content=request.data.get('content')
+            content=request.data.get('comment')
             
             # Create and save the Comment entry
             Comment.objects.create(post=post, user=user,content=content)
@@ -159,6 +159,7 @@ class CommentPost(APIView):
 
     # Delete Comment
     def delete(self,request,id):
+        print(request.data)
         try:
             try:
                 post = Post.objects.get(id=id)
@@ -166,10 +167,13 @@ class CommentPost(APIView):
                 return Response({"error": "Post not found.","success":False}, status=404)
 
             username=request.data.get('username')
+            print(username)
             user=User.objects.get(username=username)
+            
             content=request.data.get('content')
             
-            # Check if the user has already liked the post
+            
+           
             if Comment.objects.filter(post=post, user=user,content=content).exists():
                 comment=Comment.objects.filter(post=post, user=user,content=content)
                 comment.delete()

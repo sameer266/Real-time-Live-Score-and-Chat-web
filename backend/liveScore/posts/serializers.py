@@ -1,7 +1,11 @@
 from django.contrib.auth.models import User
 from rest_framework.exceptions import ValidationError
-from posts.models import Post, Like,Comment
 from rest_framework import serializers
+
+from profile_user.serializers import ProfileUserSerializers
+from posts.models import Post, Like,Comment
+
+
 
 #======= Basic serializer for username input
 class UserBasicSerializer(serializers.Serializer):
