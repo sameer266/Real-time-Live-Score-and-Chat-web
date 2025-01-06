@@ -3,7 +3,7 @@ import { Get_Posts_Data, LikePost, CommentPost } from "../data/AllPostData";
 import { PiUserListFill } from "react-icons/pi";
 import { FaHeart, FaComment } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
-import Avatar from "../assets/images/man.png";
+
 import "../style/home.css";
 import Slidebar from "../components/Slidebar";
 import Comments from "../components/Comments";

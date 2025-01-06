@@ -1,50 +1,52 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useSelector ,useDispatch} from "react-redux";
+import { useSelector } from "react-redux";
 // Icons
 import { CgHome, CgPoll, CgData } from "react-icons/cg";
-import { FiLogOut } from "react-icons/fi";  // Logout icon from FiLogOut
+import { FiLogOut } from "react-icons/fi"; // Logout icon from FiLogOut
 import { MdChat, MdMoreHoriz } from "react-icons/md"; // Chat icon from MdChat
 
-import "../style/navbar.css"
+import "../style/navbar.css";
 
 import axios from "axios";
 
-
-
 const Navbar = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
-  const { avatar} = useSelector((state) => state.auth.avatar);
+  const { avatar} = useSelector((state) => state.auth);
+ 
 
+  // ======= Navigate =========
+  const navigate= useNavigate()
+
+  // ==== Url location ===
   const location = useLocation();
   const path = location.pathname;
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMatchesDropdownOpen, setIsMatchesDropdownOpen] = useState(false);
 
-
-  useEffect( () => {
-
-    const fetchData = async () => {
-      try{
-    if (isAuthenticated){
-      const response = await axios.get('http://127.0.0.1:8000/profile/get-profile-img/',
-        { withCredentials: true }
-      );
-      console.log("Profile Image:", response);
-      let avatar_url=response.data.profile_user.avatar;
-      localStorage.setItem("avatar",avatar_url);
-      
-
+  // ===== Function to  fetch  avatar images ==========
+  const fetchData = async () => {
+    try {
+      if (isAuthenticated) {
+        const response = await axios.get(
+          "http://127.0.0.1:8000/profile/get-profile-img/",
+          { withCredentials: true }
+        );
+        console.log("Profile Image:", response);
+        let avatar_url = response.data.profile_user.avatar;
+        localStorage.setItem("avatar", avatar_url);
+        
+      }
+    } catch (error) {
+      console.log("Error in fetching profile image", error);
     }
-  }
-  catch(error){
-    console.log("Error in fetching profile image",error);
-  }
-};
-fetchData();
+  };
 
 
+  // =============  To Fetch  Fetchdata ==============
+  useEffect(() => {
+    fetchData();
   }, []);
 
   const handleToggleMenu = () => {
@@ -64,7 +66,6 @@ fetchData();
     <>
       <header className="fixed top-0 left-0 right-0 z-50 flex shadow-md py-2 px-4 sm:px-6 bg-white font-[sans-serif] min-h-[75px] tracking-wide">
         <div className="flex items-center justify-between w-full max-w-screen-xl mx-auto">
-          
           {/* Left Section: Logo */}
           <Link to="/" className="flex items-center font-bold text-lg">
             <CgData color="red" size={24} />
@@ -85,6 +86,8 @@ fetchData();
               isMenuOpen ? "block" : "hidden"
             } sm:flex items-center justify-center space-x-8`}
           >
+
+
             {/* Home */}
             <Link
               to="/"
@@ -95,6 +98,8 @@ fetchData();
               <CgHome size={24} />
             </Link>
 
+
+
             {/* Polls */}
             <Link
               to="/polls/"
@@ -104,6 +109,8 @@ fetchData();
             >
               <CgPoll size={24} />
             </Link>
+
+
 
             {/* Matches */}
             <div
@@ -119,27 +126,39 @@ fetchData();
                 <MdMoreHoriz size={24} />
               </Link>
 
+
+
               {/* Dropdown */}
               {isMatchesDropdownOpen && (
                 <ul className="absolute left-0 mt-2 w-48 bg-white shadow-md rounded-lg">
                   <li className="py-2 px-4 hover:bg-gray-100">
-                    <Link to="/matches/live/" className="block text-sm font-semibold">
+                    <Link
+                      to="/matches/live/"
+                      className="block text-sm font-semibold"
+                    >
                       Live
                     </Link>
                   </li>
                   <li className="py-2 px-4 hover:bg-gray-100">
-                    <Link to="/matches/upcoming/" className="block text-sm font-semibold">
+                    <Link
+                      to="/matches/upcoming/"
+                      className="block text-sm font-semibold"
+                    >
                       Upcoming
                     </Link>
                   </li>
                   <li className="py-2 px-4 hover:bg-gray-100">
-                    <Link to="/matches/finished/" className="block text-sm font-semibold">
+                    <Link
+                      to="/matches/finished/"
+                      className="block text-sm font-semibold"
+                    >
                       Finished
                     </Link>
                   </li>
                 </ul>
               )}
             </div>
+
 
             {/* Chat */}
             <Link
@@ -152,9 +171,23 @@ fetchData();
             </Link>
           </div>
 
-          {/* Right Section: Authentication / Logout */}
+
+
+
+
+          {/* Right Section*/}
           <div className="flex items-center space-x-4">
+            
             {isAuthenticated ? (
+              <>
+              
+          {/* {======== Profile avatar ======= } */}
+          <Link to="/dashboard">
+
+          <img src={avatar} className=" avatar-img rounded-full size-10 border-4 border-blue-500" />
+          </Link>
+       
+            {/* ---logot---- */}
               <a
                 style={{ cursor: "pointer" }}
                 onClick={handleLogout}
@@ -162,6 +195,7 @@ fetchData();
               >
                 <FiLogOut size={24} />
               </a>
+              </>
             ) : (
               <>
                 <Link
@@ -181,7 +215,6 @@ fetchData();
           </div>
         </div>
       </header>
-
       <div className="mt-[80px]"></div> {/* Margin for fixed navbar */}
     </>
   );

@@ -12,8 +12,6 @@ from rest_framework.decorators import authentication_classes,permission_classes
 class Profile_User(APIView):
     
    
-    @authentication_classes([SessionAuthentication])
-    @permission_classes([IsAuthenticated])
     def get(self,request):
         user=request.user
         print(request)

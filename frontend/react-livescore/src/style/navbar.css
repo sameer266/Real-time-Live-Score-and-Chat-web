@@ -1,3 +1,12 @@
+.avatar-img{
+
+  cursor: pointer;
+}
+
+
+
+
+
 /* Navbar Dropdown */
 @media (max-width: 640px) {
     .sm\\:hidden {
