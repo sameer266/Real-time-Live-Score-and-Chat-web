@@ -84,10 +84,8 @@ class Get_OneUser_Post(APIView):
 # ===========When user likes a post, save to DB===============
 class LikePost(APIView):
     
-    # sing decorator deoestnot override global setting
-    @authentication_classes([SessionAuthentication])
-    @permission_classes([IsAuthenticated])
-    # Like a post
+    authentication_classes=[SessionAuthentication]
+    permission_classes=[IsAuthenticated]
     def post(self, request,id):
         try:
             try:
@@ -97,10 +95,13 @@ class LikePost(APIView):
 
             username=request.data.get('username')
             user=User.objects.get(username=username)
+            print(username)
             
             # Check if the user has already liked the post
             if Like.objects.filter(post=post, user=user).exists():
-                return Response({"error": "You have already liked this post.","success":False}, status=400)
+                like=Like.objects.get(post=post,user=user)
+                like.delete()
+                return Response({"message": " You have unliked this post.","success":True}, status=201)
 
             # Create and save the Like entry
             Like.objects.create(post=post, user=user)
@@ -109,28 +110,7 @@ class LikePost(APIView):
         except Exception as e:
             return Response({"error":str(e),"success":False},status=400)    
 
-    # ===Delete like
-    def delete(self,request,id):
-        try:
-            try:
-                post = Post.objects.get(id=id)
-            except Post.DoesNotExist:
-                return Response({"error": "Post not found.","success":False}, status=404)
-
-            username=request.data.get('username')
-            user=User.objects.get(username=username)
-            
-            # Check if the user has already liked the post
-            if Like.objects.filter(post=post, user=user).exists():
-                like=Like.objects.filter(post=post, user=user)
-                like.delete()
-                return Response({"message": "You have unliked the post.","success":True}, status=201)
-            else:
-                return Response({"error": "You have not liked this post.","success":False}, status=400)
-        except Exception as e:
-            return Response({"error":str(e),"success":False},status=400)
-
-
+   
 
 # ===========Post Comments in post================
 class CommentPost(APIView):

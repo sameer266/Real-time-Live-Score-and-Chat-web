@@ -12,7 +12,7 @@ urlpatterns = [
  
  #like(create) and Dislike(delete) of Like Content
  path('like-posts/<int:id>/',views.LikePost.as_view()), #---> liked post save in DB
- path('dislike-posts/<int:id>/',views.LikePost.as_view()), #---> liked post delete from DB
+
  
  #comment(create) and delete(delete) of Comment Content
  path('comment-posts/<int:id>/',views.CommentPost.as_view()), #---> comment save in DB

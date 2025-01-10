@@ -177,9 +177,12 @@ CHANNEL_LAYERS = {
 
 # --------Cors header-------
 CORS_ALLOW_CREDENTIALS = True
+
 CORS_ALLOW_ALL_ORIGINS = True
 
-# CORS_ORIGIN_WHITELIST = (
-    
-#     "localhost:3000"
-# )
+CSRF_TRUSTED_ORIGINS = [
+    "http://127.0.0.1:3000",
+    "http://localhost:3000",
+]
+
+
