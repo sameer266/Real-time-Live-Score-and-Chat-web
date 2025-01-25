@@ -15,6 +15,7 @@ import Chat from "./pages/Chat";
 import ChatRoom from "./pages/ChatRoom";
 import Login from "./pages/Login";
 import Dashboard from "./pages/dashboard/Dashboard";
+import Profile from "./pages/dashboard/Profile";
 
 
 
@@ -38,7 +39,8 @@ function App(){
     <Route path="/signup/" element={<Signup/>}/>
     <Route path="/login" element={<Login/>}/>
     <Route path="/dashboard"  element={<Dashboard/>}/>
-
+    <Route path="/profile"  element={<Profile/>}  />
+ 
     <Route path="/chat/" element={<Chat/>} />
     <Route path="/chat/:room" element={<ChatRoom/>}/>    
 

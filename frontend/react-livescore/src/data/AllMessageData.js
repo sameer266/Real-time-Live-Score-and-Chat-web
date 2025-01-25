@@ -1,8 +1,12 @@
 import axios from "axios"
 
+axios.defaults.baseURL = "http://127.0.0.1:8000";
+
+
+
 const Chat_Group_Data =async (room)=>{
 
-    const response=await axios.get(`http://127.0.0.1:8000/chat/messages-list/${room}/`)
+    const response=await axios.get(`/chat/messages-list/${room}/`)
 
     if (response.data){
 

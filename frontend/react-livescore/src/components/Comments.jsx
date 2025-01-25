@@ -5,24 +5,31 @@ import "../style/comment.css";
 import { IoMdSend } from "react-icons/io"; // Send Icon
 import { MdDelete } from "react-icons/md"; // Delete Icon
 import { toast, ToastContainer } from "react-toastify";
-import Avatar from "../assets/images/man.png";
+
 
 const Comments = ({ isVisible, onClose, post }) => {
   const [newComment, setNewComment] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(null); // Track delete state by comment ID
+  
+
+  // ======== For CommentPost parameter =========
   const username = localStorage.getItem("username");
+  const avatar_url=localStorage.getItem('avatar')
   const postId = post.id;
 
+  
   // === Show comment notification ===
   const notify = (message) => toast.success(message);
+
+
 
   // === Handle Add Comment ===
   const handleAddComment = async () => {
     if (newComment.trim()) {
       setIsLoading(true);
       try {
-        const response = await CommentPost(postId, username, newComment);
+        const response = await CommentPost(postId, username, newComment,avatar_url);
         if (response.success) {
           notify("Comment added successfully");
           setNewComment(""); // Clear input

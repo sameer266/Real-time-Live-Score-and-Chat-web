@@ -37,4 +37,20 @@ class Profile_User(APIView):
             Response({"error":"No user found"},status=400)
 
 
-        
+    def put(self,request):
+            user=request.user
+            try:
+                print(request.data)
+                profile=Profile.objects.get(user=user)
+                serializer=ProfileUserSerializers(profile,data=request.data,partial=True)
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response({"message":"Profile Updated Success","success":True,"avatar":serializer.data.get('avatar')})
+                else:
+                    return Response({"message":"Error in Updating profile","error":serializer.errors})
+            except Exception as e :    
+                return Response({"message":"Error in updating profile","error":str(e)})
+            
+            
+            
+            

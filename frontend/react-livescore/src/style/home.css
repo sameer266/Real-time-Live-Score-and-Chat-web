@@ -95,8 +95,7 @@
   align-items: center;
   justify-content: center;
   padding: 8px 18px;
-  background-color: #f8f8f8; /* Light background for buttons */
-  border: 1px solid #ccc;
+
   border-radius: 30px;
   font-size: 1rem;
   cursor: pointer;

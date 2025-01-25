@@ -1,11 +1,14 @@
 import axios from "axios"
+axios.defaults.baseURL = "http://127.0.0.1:8000";
+
+
 
 // ===========Get all matches data==============
 
 const Get_Match_ALldata=async ()=>{
     
     try{
-    const response=await axios.get('http://127.0.0.1:8000/matches/all-matches/')
+    const response=await axios.get('/matches/all-matches/')
     const data=response.data
     return data    
 
@@ -24,7 +27,7 @@ const  Get_Live_matches=async ()=>{
 
 
     try{
-    const response=await axios.get('http://127.0.0.1:8000/matches/live-matches/')
+    const response=await axios.get('/matches/live-matches/')
     const data=response.data
     return data
 }
@@ -40,7 +43,7 @@ catch(error){
 const Get_Upcomming_matches= async ()=>{
 
     try{
-        const response=await axios.get('http://127.0.0.1:8000/matches/upcomming-matches/')
+        const response=await axios.get('/matches/upcomming-matches/')
         const data=response.data
         return data;
 

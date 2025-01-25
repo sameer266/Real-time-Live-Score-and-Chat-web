@@ -12,11 +12,9 @@ import axios from "axios";
 
 const Navbar = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
-  const { avatar} = useSelector((state) => state.auth);
+  const { avatar,username} = useSelector((state) => state.auth);
+  
  
-
-  // ======= Navigate =========
-  const navigate= useNavigate()
 
   // ==== Url location ===
   const location = useLocation();
@@ -28,16 +26,18 @@ const Navbar = () => {
   // ===== Function to  fetch  avatar images ==========
   const fetchData = async () => {
     try {
-      if (isAuthenticated) {
+     
         const response = await axios.get(
-          "http://127.0.0.1:8000/profile/get-profile-img/",
+          `http://127.0.0.1:8000/profile/profile-data/?q=${username}`,
+          
           { withCredentials: true }
-        );
-        console.log("Profile Image:", response);
+        )
+      
+       
         let avatar_url = response.data.profile_user.avatar;
         localStorage.setItem("avatar", avatar_url);
         
-      }
+      
     } catch (error) {
       console.log("Error in fetching profile image", error);
     }
@@ -182,10 +182,14 @@ const Navbar = () => {
               <>
               
           {/* {======== Profile avatar ======= } */}
-          <Link to="/dashboard">
+          {
+          isAuthenticated && (
+          <Link to="/profile">
 
           <img src={avatar} className=" avatar-img rounded-full size-10 border-4 border-blue-500" />
           </Link>
+          )
+            }
        
             {/* ---logot---- */}
               <a

@@ -1,12 +1,16 @@
 import axios from "axios"
 
 
+axios.defaults.baseURL = "http://127.0.0.1:8000";
+
+
+
 // ==========Poll questions data================
 const poll_question_Alldata = async () => {
 
 
     try {
-        const response = await axios.get('http://127.0.0.1:8000/polls/poll-question/')
+        const response = await axios.get('/polls/poll-question/')
         const data = response.data
         return data;
     }
@@ -19,7 +23,7 @@ const poll_question_Alldata = async () => {
 // ============Votes Data of choice=============
 const Votes_Data = async () => {
     try {
-        const response = await axios.get("http://127.0.0.1:8000/polls/votes-data/")
+        const response = await axios.get("/polls/votes-data/")
         const data = response.data
         return data;
 
@@ -36,7 +40,7 @@ const Create_Votes_POll = (poll_id,choice) => {
 
     try {
         if (poll_id) {
-            const response= axios.post(`http://127.0.0.1:8000/polls/post-vote/${poll_id}/`,
+            const response= axios.post(`/polls/post-vote/${poll_id}/`,
                 {
                     choice:choice
                 },

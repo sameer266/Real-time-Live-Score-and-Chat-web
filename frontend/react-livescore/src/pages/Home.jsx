@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Get_Posts_Data, LikePost, CommentPost } from "../data/AllPostData";
+import { Get_Posts_Data, LikePost } from "../data/AllPostData";
 import { PiUserListFill } from "react-icons/pi";
 import { FaHeart, FaComment } from "react-icons/fa";
+import { AiOutlineLike } from "react-icons/ai";
+
 import { ToastContainer, toast } from "react-toastify";
 
 import "../style/home.css";
@@ -32,6 +34,7 @@ const Home = () => {
     fetchPosts();
   }, []);
 
+  
   // ======= Handle Like Post ============
   const sendLike = async (id, username) => {
     if (!username) {
@@ -107,7 +110,7 @@ const Home = () => {
                       }`}
                       onClick={() => sendLike(post.id, username)}
                     >
-                      <FaHeart className="icon" />
+                      <AiOutlineLike className="icon" />
                       {post.likes_count}
                     </button>
 

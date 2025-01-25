@@ -129,9 +129,10 @@ class CommentPost(APIView):
             username=request.data.get('username')
             user=User.objects.get(username=username)
             content=request.data.get('comment')
+            avatar=request.data.get('avatar')
             
             # Create and save the Comment entry
-            Comment.objects.create(post=post, user=user,content=content)
+            Comment.objects.create(post=post, user=user,content=content,avatar=avatar)
             return Response({"message": "You have commented on the post.","success":True}, status=201)
         
         except Exception as e:

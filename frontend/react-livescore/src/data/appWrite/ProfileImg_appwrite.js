@@ -12,13 +12,13 @@ const storage = new Storage(client);
 const Profile_UploadFile = async (file) => {
   try {
     const response = await storage.createFile(
-      process.env.REACT_APP_PROFILE_PROFILE_BUCKET_ID,
+      process.env.REACT_APP_APPWRITE_PROFILE_BUCKET_ID,
       "unique()",
       file
     );
     const fileUrl = `${process.env.REACT_APP_APPWRITE_URL}/storage/buckets/${process.env.REACT_APP_APPWRITE_PROFILE_BUCKET_ID}/files/${response.$id}/view?project=${process.env.REACT_APP_APPWRITE_PROJECT_ID}`;
 
-    return { url: fileUrl }; // Return the file URL
+    return fileUrl; // Return the file URL
   } catch (error) {
     console.error("Error uploading file:", error);
     throw error;
@@ -31,7 +31,7 @@ const Profile_DeleteFile = async (file_url) => {
     // Extract the file ID from the URL
     const urlParts = file_url.split("/files/");
     if (urlParts.length < 2) {
-      console.error("File URL is malformed.");
+      console.error("File URL is Smaller.");
       return false;
     }
     const fileId = urlParts[1].split("/")[0]; // Get the file ID (before the next '/')

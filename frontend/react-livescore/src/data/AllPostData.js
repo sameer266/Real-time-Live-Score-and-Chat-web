@@ -1,9 +1,26 @@
 import axios from "axios";
 
+axios.defaults.baseURL = "http://127.0.0.1:8000";
+
+
+// Function to get CSRF token from cookies
+const getCSRFToken = () => {
+  let csrfToken = null;
+  const cookies = document.cookie.split(';');
+  cookies.forEach(cookie => {
+    if (cookie.trim().startsWith('csrftoken=')) {
+      csrfToken = cookie.trim().split('=')[1];
+    }
+  });
+  return csrfToken;
+};
+
+const csrfToken = getCSRFToken();
+
 // =======Get all news Feeds==========
 const Get_Posts_Data = async () => {
   try {
-    const response = await axios.get("http://127.0.0.1:8000/posts/posts-data/");
+    const response = await axios.get("/posts/posts-data/");
     const data = response.data;
     return data;
   } catch (error) {
@@ -16,7 +33,7 @@ const Get_Posts_Data = async () => {
 const Get_OneUser_Data = async (username) => {
   try {
     const response = await axios.get(
-      `http://127.0.0.1:8000/posts/posts-data/${username}`
+      `/posts/posts-data/${username}`
     );
     if (response.data.success) {
       console.log("User posts data", response.data);
@@ -27,18 +44,23 @@ const Get_OneUser_Data = async (username) => {
   }
 };
 
-// ===========Post news Feed==========
+// ===========CreatePost news Feed==========
 
 const Send_Posts_Data = async (posts_data) => {
   try {
     const response = await axios.post(
-      "http://127.0.0.1:8000/posts/create-post/",
+      "/posts/create-post/",
       {
         title: posts_data.title,
         image: posts_data.image,
         user: { username: posts_data.username }, // Send only the username
       },
-      { withCredentials: true }
+      {
+        headers: {
+          'X-CSRFToken': csrfToken,  // Add CSRF token in headers
+        },
+        withCredentials: true,  // Include cookies (for session)
+      }
     );
     console.log("Post created successfully:", response.data);
     return response.data;
@@ -55,7 +77,9 @@ const Send_Posts_Data = async (posts_data) => {
 const DeletePost = async (id) => {
   try {
     const response = await axios.delete(
-      `http://127.0.0.1:8000/posts/delete-post/${id}/`
+      `/posts/delete-post/${id}/`,
+     
+      
     );
     if (response.data) {
       console.log(response.data);
@@ -70,55 +94,40 @@ const DeletePost = async (id) => {
 
 
 
-// =====send like to server========
-
-
-const LikePost = async (id,username) => {
+const LikePost = async (id, username) => {
   try {
-    
+     // Get CSRF token from cookies
+
     const response = await axios.post(
-      `http://127.0.0.1:8000/posts/like-posts/${id}/`,
-      {username:username},
+      `/posts/like-posts/${id}/`,  // Correct URL string format
+      { username: username },
       {
-        withCredentials: true, 
-        
+        headers: {
+          'X-CSRFToken': csrfToken,  // Add CSRF token in headers
+        },
+        withCredentials: true,  // Include cookies (for session)
       }
     );
+
     return response.data;
   } catch (error) {
     console.error('Error in sending like to server:', error.response);
-    alert( error.response.data.error);
+    alert(error.response.data);
   }
 };
 
-// =====dislike post====
-const DislikePost = async (id,username) => {
-  try {
-    
-    const response = await axios.post(
-      `http://127.0.0.1:8000/posts/dislike-posts/${id}/`,
-       {username:username},
-      {withCredentials: true})
-      console.log(response.data);
-      return response.data;
-
-    }
-    catch (error) {
-      console.error('Error in sending dislike to server:', error.response);
-      alert( error.response.data.error);
-    }
-  }
 
 
   // ======Comment on post====
-  const CommentPost = async (id,username,comment) => {
+  const CommentPost = async (id,username,comment,img_url) => {
     try {
       
       const response = await axios.post(
-        `http://127.0.0.1:8000/posts/comment-posts/${id}/`,
+        `/posts/comment-posts/${id}/`,
         {username:username,
-          comment:comment},
-          {withCredentials: true});
+          comment:comment,
+        avatar:img_url},
+          );
         console.log(response.data);
         return response.data;
     }
@@ -134,10 +143,10 @@ const DislikePost = async (id,username) => {
 const DeleteComment = async (post_id, username, content) => {
   try {
     const response = await axios.delete(
-      `http://127.0.0.1:8000/posts/delete-comment/${post_id}/`,
+      `/posts/delete-comment/${post_id}/`,
       {
         data: { username, content }, // Pass data in the `data` field for DELETE requests
-        withCredentials: true,
+        
       }
     );
     return response.data; // Return server response to the caller
@@ -150,5 +159,5 @@ const DeleteComment = async (post_id, username, content) => {
 };
 
     
-export { Get_Posts_Data, Send_Posts_Data, DeletePost, Get_OneUser_Data, LikePost,DislikePost,CommentPost , DeleteComment};
+export { Get_Posts_Data, Send_Posts_Data, DeletePost, Get_OneUser_Data, LikePost,CommentPost , DeleteComment};
 
